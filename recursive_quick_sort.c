@@ -2,6 +2,7 @@
 
 static void quick_sort(int a[], int array_num);
 static void quick_sort_l(int a[], int left_idx, int right_idx);
+static int partition(int a[], int left_idx, int right_idx);
 
 /**
  * execute recursive quick sort algorithm
@@ -26,13 +27,13 @@ int main(int argc, char *argv[])
     }
 }
 
-void quick_sort(int a[], int array_num)
+static void quick_sort(int a[], int array_num)
 {
     int right_idx = array_num - 1;
     quick_sort_l(a, 0, right_idx);
 }
 
-void quick_sort_l(int a[], int left_idx, int right_idx)
+static void quick_sort_l(int a[], int left_idx, int right_idx)
 {
     int part_idx;
     if (left_idx >= right_idx) {
@@ -44,7 +45,7 @@ void quick_sort_l(int a[], int left_idx, int right_idx)
     quick_sort_l(a, part_idx + 1, right_idx);
 }
 
-int partition(int a[], int left_idx, int right_idx)
+static int partition(int a[], int left_idx, int right_idx)
 {
     int i = left_idx - 1;
     int j = right_idx;

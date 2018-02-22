@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+static void quick_sort(int a[], int array_num);
+static void quick_sort_l(int a[], int left_idx, int right_idx);
+
 /**
  * execute recursive quick sort algorithm
  */
@@ -37,14 +40,13 @@ void quick_sort_l(int a[], int left_idx, int right_idx)
     }
 
     part_idx = partition(a, left_idx, right_idx);
-    printf("partition index %d \n", part_idx);
     quick_sort_l(a, left_idx, part_idx - 1);
     quick_sort_l(a, part_idx + 1, right_idx);
 }
 
-int partition(int a[], int l, int right_idx)
+int partition(int a[], int left_idx, int right_idx)
 {
-    int i = l - 1;
+    int i = left_idx - 1;
     int j = right_idx;
 
     // set the right element as pivot

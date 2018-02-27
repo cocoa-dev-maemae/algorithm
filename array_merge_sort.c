@@ -5,8 +5,7 @@
 #define SIZE_OF_ARR(arr) (sizeof(arr) / sizeof(arr[0]))
 
 static void print_arr(const int* arr, size_t size, bool is_sorted);
-static void merge_sort(int* arr, size_t size);
-static void merge_sort_rec(int* arr, int begin, int end, int* work);
+static void merge_sort(int* arr, int begin, int end, int* work);
 static void merge(int* arr, int begin, int end, int mid, int* work);
 
 int main(int argc, char *argv)

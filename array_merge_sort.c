@@ -15,9 +15,9 @@ int main(int argc, char *argv)
 
     int* work;
     work = malloc(sizeof(int) * SIZE_OF_ARR(arr));
-    
+
     print_arr(arr, SIZE_OF_ARR(arr), false);
-    merge_sort_rec(arr, 0, SIZE_OF_ARR(arr) - 1, work);
+    merge_sort(arr, 0, SIZE_OF_ARR(arr) - 1, work);
     print_arr(arr, SIZE_OF_ARR(arr), true);
 
     free(work);
@@ -39,7 +39,7 @@ void print_arr(const int* arr, size_t size, bool is_sorted)
     printf("\n");
 }
 
-void merge_sort_rec(int* arr, int begin, int end, int* work)
+void merge_sort(int* arr, int begin, int end, int* work)
 {
     int mid;
 
@@ -50,8 +50,8 @@ void merge_sort_rec(int* arr, int begin, int end, int* work)
 
     /* Divide 2 rows, process recursively */
     mid = (begin + end) / 2;
-    merge_sort_rec(arr, begin, mid, work);
-    merge_sort_rec(arr, mid + 1, end, work);
+    merge_sort(arr, begin, mid, work);
+    merge_sort(arr, mid + 1, end, work);
 
     merge(arr, begin, end, mid, work);
 }

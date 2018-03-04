@@ -2,9 +2,8 @@
 #include <stdbool.h>
 
 static void print_arr(int a[], int arr_num, bool is_sorted);
-static void quick_sort(int a[], int arr_num);
-static void quick_sort_l(int a[], int left_idx, int right_idx);
-static int partition(int a[], int left_idx, int right_idx);
+static void quick_sort(int a[], int begin, int end);
+static int partition(int a[], int begin, int end);
 
 /**
  * execute recursive quick sort algorithm
@@ -15,7 +14,7 @@ int main(int argc, char *argv[])
     int a[10] = {3, 4, 1, 10, 9, 5, 8, 7, 6, 2};
 
     print_arr(a, arr_num, false);
-    quick_sort(a, arr_num);
+    quick_sort(a, 0, arr_num - 1);
     print_arr(a, arr_num, true);
 }
 
@@ -30,35 +29,30 @@ static void print_arr(int a[], int arr_num, bool is_sorted)
 
     int i = 0;
     for (i; i < arr_num; i++) {
-        printf("%d \n", a[i]);
+        printf("%d ", a[i]);
     }
+    printf("\n");
 }
 
-static void quick_sort(int a[], int arr_num)
+static void quick_sort(int a[], int begin, int end)
 {
-    int right_idx = arr_num - 1;
-    quick_sort_l(a, 0, right_idx);
-}
-
-static void quick_sort_l(int a[], int left_idx, int right_idx)
-{
-    int part_idx;
-    if (left_idx >= right_idx) {
+    int part;
+    if (begin >= end) {
         return;
     }
 
-    part_idx = partition(a, left_idx, right_idx);
-    quick_sort_l(a, left_idx, part_idx - 1);
-    quick_sort_l(a, part_idx + 1, right_idx);
+    part = partition(a, begin, end);
+    quick_sort(a, begin, part - 1);
+    quick_sort(a, part + 1, end);
 }
 
-static int partition(int a[], int left_idx, int right_idx)
+static int partition(int a[], int begin, int end)
 {
-    int i = left_idx - 1;
-    int j = right_idx;
+    int i = begin - 1;
+    int j = end;
 
     // set the right element as pivot
-    int pivot = a[right_idx];
+    int pivot = a[end];
     int t;
     for (;;) {
         // proceed pointer i to right
@@ -83,8 +77,8 @@ static int partition(int a[], int left_idx, int right_idx)
 
     // exchange a[i] with pivot
     t = a[i];
-    a[i] = a[right_idx];
-    a[right_idx] = t;
+    a[i] = a[end];
+    a[end] = t;
 
     // return partition location
     return i;

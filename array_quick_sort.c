@@ -36,12 +36,11 @@ static void print_arr(int a[], int arr_num, bool is_sorted)
 
 static void quick_sort(int a[], int begin, int end)
 {
-    int part;
     if (begin >= end) {
         return;
     }
 
-    part = partition(a, begin, end);
+    int part = partition(a, begin, end);
     quick_sort(a, begin, part - 1);
     quick_sort(a, part + 1, end);
 }

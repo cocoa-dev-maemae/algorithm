@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX_INDEX 9
+#define MAX_NUM 10
 
 struct {
     int key;
@@ -8,7 +8,7 @@ struct {
 } table[10];
 
 static void set_data();
-static char *search(int key);
+static char *linear_search(int key);
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     }
 
     int key = atoi(tmp_key);
-    char *result = search(key);
+    char *result = linear_search(key);
     if (result != NULL && result != '\0') {
         printf("result: %c \n", result);
     } else {
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 static void set_data()
 {
     int i = 0;
-    for (i; i <= MAX_INDEX; i++) {
+    for (i; i < MAX_NUM; i++) {
         table[i].key = i;
         char *data = 'A' + i;
         table[i].data = data;
@@ -43,11 +43,11 @@ static void set_data()
 /**
  * Simple linear search
  */
-static char *search(int key)
+static char *linear_search(int key)
 {
     int i = 0;
     char *result = NULL;
-    while (i <= MAX_INDEX) {
+    while (i < MAX_NUM) {
         if (table[i].key == key) {
             result = table[i].data;
         }

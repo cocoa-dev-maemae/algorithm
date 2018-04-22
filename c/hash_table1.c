@@ -29,14 +29,13 @@ static char kw[NUM_KW][MAX_KW_LEN] = {
         "void", "volatile", "while"
 };
 
-int hash(char *key);           /* 0 から HASH_TABLE_SIZE のハッシュ値を返す */
+int hash(const char *key);           /* 0 から HASH_TABLE_SIZE のハッシュ値を返す */
 void initHashTable(void);      /* キーワードをハッシュテーブルに登録 */
-bool findKeyword(char *key);    /* ハッシュテーブルに登録済みか調べる */
-void ListKeyWord(void);        /* ハッシュ値とキーワードを一覧表示 */
-void FreeKeyWord(void);        /* malloc() で割り付けたメモリを解放 */
+bool findKeyword(const char *key);    /* ハッシュテーブルに登録済みか調べる */
+void freeKeyword(void);        /* malloc() で割り付けたメモリを解放 */
 void main(void);
 
-int hash(char *key)
+int hash(const char *key)
 {
     int hashval = 0;
     while (*key != '\0') {
@@ -45,29 +44,23 @@ int hash(char *key)
     return (hashval % HASH_TABLE_SIZE);
 }
 
-  /* キーワードをハッシュテーブルに登録 */
 void initHashTable(void)
 {
     int i;
     struct list *p, *q;
     int hashval;
-
     for (i = 0; i < NUM_KW; i++) {
         if ((findKeyword(kw[i])) == false) {  /* 登録されていなかったら */
-                                              /* メモリを割り付ける */
             if ((p = (struct list *)malloc(sizeof(struct list))) == NULL) {
                 fprintf(stderr, "メモリ不足です。\n");
                 exit(2);
             }
-
             strcpy((*p).keyword, kw[i]);
             hashval = hash(kw[i]);             /* ハッシュ値を求めて */
-			
             if (hashtable[hashval] == NULL) {  /* 未登録なら */
                 hashtable[hashval] = p;        /* p の指すアドレスを登録 */
                 p->next = NULL;                /* リストの末尾に NULL を追加 */
-            }
-            else {                             /* 既に登録していたら */
+            } else {                             /* 既に登録していたら */
                 q = hashtable[hashval];
                 while (q->next != NULL)        /* データがなくなるまで */
                     q = q->next;               /* リストをたどる */
@@ -78,32 +71,18 @@ void initHashTable(void)
     }
 }
 
-  /* ハッシュテーブルに登録済みか調べる */
-bool findKeyword(char *key)
+bool findKeyword(const char *key)
 {
     struct list *p;
-
     for (p = hashtable[hash(key)]; p != NULL; p = p->next)
-        if (!strcmp(key, (*p).keyword))     /* 登録済みなら */
+        if (!strcmp(key, (*p).keyword)) {
             return true;
-
+        }
         return false;
 }
 
-/* ハッシュ値とキーワードを一覧表示 */
-void ListKeyWord(void)
-{
-    int i;
-    struct list *p;
-
-    for (i = 0; i < HASH_TABLE_SIZE; i++)
-        for (p = hashtable[i]; p != NULL; p = p->next)  /* p が NULL でなければ */
-                                                        /* ハッシュ値とキーワードを表示 */
-            printf("予約語:%s ハッシュ値:%d:\n", (*p).keyword, hash((*p).keyword));
-}
-
 /* malloc(  ) で割り付けたメモリを解放 */
-void FreeKeyWord(void)
+void freeKeyword(void)
 {
     int i;
     struct list *p, *q;
@@ -122,8 +101,6 @@ void main(void)
     int i;
 
     initHashTable();
-    ListKeyWord();
-
     for (i = 0; i < 4; i++) {
         gets(word);
 
@@ -132,5 +109,5 @@ void main(void)
         else
             printf("%s は未登録です。\n", word);
     }
-    FreeKeyWord(  );
+    freeKeyword();
 }

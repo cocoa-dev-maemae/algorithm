@@ -11,14 +11,8 @@ struct list {
     char keyword[MAX_KW_LEN];
     struct list *next;
 };
-struct list *hashtable[HASH_TABLE_SIZE];
 
-/*
-typedef struct list {
-    char keyword[MAX_KW_LEN];
-    struct list *next; 
-} *hashtable[HASH_TABLE_SIZE];
-*/
+struct list *hashtable[HASH_TABLE_SIZE];
 
 /* keywords */
 static char kw[NUM_KW][MAX_KW_LEN] = {
@@ -30,9 +24,9 @@ static char kw[NUM_KW][MAX_KW_LEN] = {
 };
 
 int hash(const char *key);           /* 0 から HASH_TABLE_SIZE のハッシュ値を返す */
-void initHashTable(void);      /* キーワードをハッシュテーブルに登録 */
-bool findKeyword(const char *key);    /* ハッシュテーブルに登録済みか調べる */
-void freeKeyword(void);        /* malloc() で割り付けたメモリを解放 */
+void init(void);      /* キーワードをハッシュテーブルに登録 */
+bool find(const char *key);    /* ハッシュテーブルに登録済みか調べる */
+//void free(void);        /* malloc() で割り付けたメモリを解放 */
 void main(void);
 
 int hash(const char *key)
@@ -44,13 +38,13 @@ int hash(const char *key)
     return (hashval % HASH_TABLE_SIZE);
 }
 
-void initHashTable(void)
+void init(void)
 {
     int i;
     struct list *p, *q;
     int hashval;
     for (i = 0; i < NUM_KW; i++) {
-        if ((findKeyword(kw[i])) == false) {  /* 登録されていなかったら */
+        if ((find(kw[i])) == false) {  /* 登録されていなかったら */
             if ((p = (struct list *)malloc(sizeof(struct list))) == NULL) {
                 fprintf(stderr, "メモリ不足です。\n");
                 exit(2);
@@ -60,18 +54,18 @@ void initHashTable(void)
             if (hashtable[hashval] == NULL) {  /* 未登録なら */
                 hashtable[hashval] = p;        /* p の指すアドレスを登録 */
                 p->next = NULL;                /* リストの末尾に NULL を追加 */
-            } else {                             /* 既に登録していたら */
+            } else {                           /* 既に登録していたら */
                 q = hashtable[hashval];
                 while (q->next != NULL)        /* データがなくなるまで */
                     q = q->next;               /* リストをたどる */
-                q->next = p;                   /* リストの末尾に p の指すアドレスを登録 */
-                p->next = NULL;                /* その末尾に NULL を追加 */
+                    q->next = p;               /* リストの末尾に p の指すアドレスを登録 */
+                    p->next = NULL;            /* その末尾に NULL を追加 */
             }
         }
     }
 }
 
-bool findKeyword(const char *key)
+bool find(const char *key)
 {
     struct list *p;
     for (p = hashtable[hash(key)]; p != NULL; p = p->next)
@@ -82,32 +76,32 @@ bool findKeyword(const char *key)
 }
 
 /* malloc(  ) で割り付けたメモリを解放 */
-void freeKeyword(void)
+/*
+void free(void)
 {
     int i;
     struct list *p, *q;
     for (i = 0; i < HASH_TABLE_SIZE; i++)
-        for (p = hashtable[i]; p != NULL;) {   /* p が NULL でなければ */
-            q = p->next;                        /* p->next を保存 */
-            free(p);                            /* メモリを解放 */
-            p = q;                              /* p->next を p に代入 */
+        for (p = hashtable[i]; p != NULL;) {
+            q = p->next;                    
+            free(p);                     
+            p = q;                           
         }
 }
-
+*/
 
 void main(void)
 {
     char word[MAX_KW_LEN];
     int i;
 
-    initHashTable();
+    init();
     for (i = 0; i < 4; i++) {
         gets(word);
-
-        if ((findKeyword(word)) == true)
+        if ((find(word)) == true)
             printf("%s は登録済みです。\n", word);
         else
             printf("%s は未登録です。\n", word);
     }
-    freeKeyword();
+    //free();
 }

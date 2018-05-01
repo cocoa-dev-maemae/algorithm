@@ -8,16 +8,16 @@ typedef struct cell {
     int data;
 } cell_t;
 
-static cell_t *alloc_list(int data);
+static cell_t *create_cell(int data);
 static void insert(cell_t *header, int data);
 static void delete(cell_t *header);
 
-cell_t *alloc_list(int data)
+cell_t *create_cell(int data)
 {
     cell_t *new = NULL;
     new = (cell_t *)malloc(sizeof(cell_t));
     if (new == NULL) {
-        fprintf(stderr, "ERROR: alloc_list(): %s\n", strerror(errno));
+        fprintf(stderr, "ERROR: create_cell(): %s\n", strerror(errno));
         return NULL;
     }
     new->next = NULL;
@@ -31,9 +31,9 @@ void insert(cell_t *header, int data)
     cell_t *prev = header;
 
     //create cell
-    next = alloc_list(data);
+    next = create_cell(data);
 
-    //  cell to the end
+    // cell to end
     while (prev->next != NULL) {
         prev = prev->next;
     }
@@ -64,7 +64,7 @@ void print_list(cell_t *header)
 int main(int argc, char* argv)
 {
     int cnt = 0;
-    cell_t *header = alloc_list(0);
+    cell_t *header = create_cell(0);
     if (header == NULL) {
         return 1;
     }

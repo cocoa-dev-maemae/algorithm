@@ -4,25 +4,25 @@
 
 struct {
     int key;
-    char *data;
+    char *value;
 } table[MAX_NUM];
 
-static void set_data();
-static char *binary_search(int key);
+static void set_value();
+static char *binsearch(int key);
 
 int main(int argc, char *argv[])
 {
-    set_data();
+    set_value();
 
     char *tmp_key = argv[1];
-    if (tmp_key == NULL || tmp_key == '\0') {
-        printf("Specify index of data \n");
+    if (tmp_key == NULL || *tmp_key == '\0') {
+        printf("Specify index of value \n");
         return 0;
     }
 
     int key = atoi(tmp_key);
     char *result = binary_search(key);
-    if (result != NULL && result != '\0') {
+    if (result != NULL && *result != '\0') {
         printf("result: %c \n", result);
     } else {
         printf("No result \n");
@@ -30,20 +30,20 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-static void set_data()
+static void set_value()
 {
     int i = 0;
     for (i; i < MAX_NUM; i++) {
         table[i].key = i;
-        char *data = 'A' + i;
-        table[i].data = data;
+        char *value = 'A' + i;
+        table[i].value = value;
     }
 }
 
 /**
  * Simple binary search
  */
-static char *binary_search(int key)
+char *binsearch(int key)
 {
     int begin, mid, end;
     begin = 0;
@@ -51,9 +51,9 @@ static char *binary_search(int key)
 
     while (begin <= end) {
         mid = (begin + end) / 2;
-        if (table[mid].key == key) {
-            return table[mid].data;
-        } else if (table[mid].key > key) {
+        if (key == table[mid].key) {
+            return table[mid].value;
+        } else if (key < table[mid].key) {
             end = mid - 1;
         } else {
             begin = mid + 1;

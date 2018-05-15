@@ -16,14 +16,14 @@ int main(int argc, char *argv[])
     set_value();
 
     char *tmp_key = argv[1];
-    if (tmp_key == NULL || tmp_key == '\0') {
+    if (tmp_key == NULL || *tmp_key == '\0') {
         printf("Specify index of value \n");
         return 0;
     }
 
     int key = atoi(tmp_key);
     char *result = lsearch(key);
-    if (result != NULL && result != '\0') {
+    if (result != NULL && *result != '\0') {
         printf("result: %c \n", result);
     } else {
         printf("No result \n");

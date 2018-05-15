@@ -8,21 +8,21 @@ struct {
 } table[MAX_NUM];
 
 static void set_value();
-static char *binary_search(int key);
+static char *binsearch(int key);
 
 int main(int argc, char *argv[])
 {
     set_value();
 
     char *tmp_key = argv[1];
-    if (tmp_key == NULL || tmp_key == '\0') {
+    if (tmp_key == NULL || *tmp_key == '\0') {
         printf("Specify index of value \n");
         return 0;
     }
 
     int key = atoi(tmp_key);
     char *result = binary_search(key);
-    if (result != NULL && result != '\0') {
+    if (result != NULL && *result != '\0') {
         printf("result: %c \n", result);
     } else {
         printf("No result \n");
@@ -43,7 +43,7 @@ static void set_value()
 /**
  * Simple binary search
  */
-char *binary_search(int key)
+char *binsearch(int key)
 {
     int begin, mid, end;
     begin = 0;

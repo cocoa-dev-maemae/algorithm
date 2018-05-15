@@ -1,2 +1,7 @@
-c/a.out
+c/search/a.out
+c/search/*.o
+c/hash_table/a.out
+c/hash_table/*.o
+c/sort/a.out
+c/sort/*.o
 java/*.class

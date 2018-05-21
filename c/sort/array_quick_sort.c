@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-static void print_arr(int a[], int arr_num, bool is_sorted);
+static void print_arr(int a[], bool is_sorted);
 static void quick_sort(int a[], int begin, int end);
 static int partition(int a[], int begin, int end);
 
@@ -10,16 +10,13 @@ static int partition(int a[], int begin, int end);
  */
 int main(int argc, char *argv[])
 {
-    int arr_num = 10;
-    int a[10] = {3, 4, 1, 10, 9, 5, 8, 7, 6, 2};
-
-    print_arr(a, arr_num, false);
-    quick_sort(a, 0, arr_num - 1);
-    print_arr(a, arr_num, true);
+    int a[] = {3, 4, 1, 10, 9, 5, 8, 7, 6, 2};
+    print_arr(a, false);
+    quick_sort(a, 0, sizeof(a) / sizeof(a[0]) - 1);
+    print_arr(a, true);
 }
 
-static void print_arr(int a[], int arr_num, bool is_sorted)
-{
+void print_arr(int a[], bool is_sorted) {
 
     if (is_sorted == true) {
         printf("After sort \n");
@@ -27,14 +24,14 @@ static void print_arr(int a[], int arr_num, bool is_sorted)
         printf("Before sort \n");
     }
 
-    int i = 0;
-    for (i; i < arr_num; i++) {
+    int i;
+    for (i = 0; i < sizeof(a); i++) {
         printf("%d ", a[i]);
     }
     printf("\n");
 }
 
-static void quick_sort(int a[], int begin, int end)
+void quick_sort(int a[], int begin, int end)
 {
     if (begin >= end) {
         return;
@@ -45,7 +42,7 @@ static void quick_sort(int a[], int begin, int end)
     quick_sort(a, part + 1, end);
 }
 
-static int partition(int a[], int begin, int end)
+int partition(int a[], int begin, int end)
 {
     int i = begin - 1;
     int j = end;

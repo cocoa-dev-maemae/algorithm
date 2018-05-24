@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-static void print_arr(int a[], bool is_sorted);
+#define size_of_arr(a) (sizeof(a) / sizeof(a[0])) 
+
+static void print_arr(const int *a, bool is_sorted);
 static void quick_sort(int a[], int begin, int end);
 static int partition(int a[], int begin, int end);
 
@@ -11,21 +14,17 @@ static int partition(int a[], int begin, int end);
 int main(int argc, char *argv[])
 {
     int a[] = {3, 4, 1, 10, 9, 5, 8, 7, 6, 2};
-    print_arr(a, false);
-    quick_sort(a, 0, sizeof(a) / sizeof(a[0]) - 1);
-    print_arr(a, true);
-}
-
-void print_arr(int a[], bool is_sorted) {
-
-    if (is_sorted == true) {
-        printf("After sort \n");
-    } else {
-        printf("Before sort \n");
-    }
-
     int i;
-    for (i = 0; i < sizeof(a); i++) {
+    printf("Before sort \n");
+    for (i = 0; i < size_of_arr(a); ++i) {
+        printf("%d ", a[i]);
+    }
+    printf("\n");
+
+    quick_sort(a, 0, size_of_arr(a) - 1);
+
+    printf("After sort \n");
+    for (i = 0; i < size_of_arr(a); ++i) {
         printf("%d ", a[i]);
     }
     printf("\n");
@@ -52,14 +51,10 @@ int partition(int a[], int begin, int end)
     int t;
     for (;;) {
         // proceed pointer i to right
-        while (a[++i] < pivot) {
-            ;
-        }
+        while (a[++i] < pivot) {;}
 
         // proceed pointer j to left
-        while (i < --j && pivot < a[j]) {
-            ;
-        }
+        while (i < --j && pivot < a[j]) {;}
 
         if (i >= j) {
             break;

@@ -4,7 +4,6 @@
 
 #define size_of_arr(a) (sizeof(a) / sizeof(a[0])) 
 
-static void print_arr(const int *a, bool is_sorted);
 static void quick_sort(int a[], int begin, int end);
 static int partition(int a[], int begin, int end);
 

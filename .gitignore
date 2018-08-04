@@ -4,4 +4,5 @@ c/hash_table/a.out
 c/hash_table/*.o
 c/sort/a.out
 c/sort/*.o
-java/*.class
+java/list/*.class
+java/tree/*.class

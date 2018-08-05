@@ -1,7 +1,11 @@
-c/search/a.out
-c/search/*.o
 c/hash_table/a.out
 c/hash_table/*.o
 c/sort/a.out
 c/sort/*.o
-java/*.class
+c/graph/a.out
+c/graph/*.o
+c/tree/a.out
+c/tree/*.o
+java/list/*.class
+java/tree/*.class
+java/graph/*.class

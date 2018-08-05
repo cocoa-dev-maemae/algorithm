@@ -1,7 +1,6 @@
 class TreeNode {
     int value;
     TreeNode right, left;
-
     TreeNode(int value) {
         this.value = value;
         right = null;
@@ -11,7 +10,6 @@ class TreeNode {
 
 public class BinaryTree {
     TreeNode node;
-  
     private TreeNode addRecur(TreeNode curNode, int value) {
         if (curNode == null) {
             return new TreeNode(value);

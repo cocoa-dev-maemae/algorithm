@@ -9,3 +9,4 @@ c/tree/*.o
 java/list/*.class
 java/tree/*.class
 java/graph/*.class
+java/dp/*.class

@@ -27,12 +27,10 @@ class DiceThrow {
                 for (int k = 1; k < j && k <= f; k++) {
                     /**
 					 * Recursice approach
-					 *
 					 * E.g.
-					 * Sum(f=6, d=3, s=8) = Sum(6, 2, 7) + Sum(6, 2, 6) + Sum(6, 2, 5) +
-					 *                      Sum(6, 2, 4) + Sum(6, 2, 3) + Sum(6, 2, 2)
+					 * Sum(f=2, d=2, s=3) = Sum(2, 1, 2) + Sum(2, 1, 1)
 					 **/
-					cnt[i][j] += cnt[i - 1][j - k];
+					cnt[i][j] = (cnt[i][j] + cnt[i - 1][j - k]) % 1000000007;
   				}
             }
         }
@@ -45,5 +43,6 @@ class DiceThrow {
         System.out.println(findWays(6, 3, 8));
         System.out.println(findWays(4, 2, 5));
         System.out.println(findWays(4, 3, 5));
+        System.out.println(findWays(30, 30, 500));
     }
 }
